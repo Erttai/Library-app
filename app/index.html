@@ -11,13 +11,14 @@
       href="https://fonts.googleapis.com/css2?family=Raleway&display=swap"
       rel="stylesheet"
     />
+    <script src="script.js" defer></script>
     <title>My Library</title>
   </head>
   <body>
     <header class="header">
       <h1>My Library</h1>
       <p>
-        This an app to help you to keep track the books you're reading, have
+        This is an app to help you to keep track the books you're reading, have
         read and want to read.
       </p>
     </header>
@@ -29,7 +30,9 @@
 
     <footer class="footer">im a footer</footer>
 
-    <div class="modal">
+    <div class="modal hidden">
+      <button class="close-modal">&times;</button>
+
       <form action="#" class="modal__form">
         <h3>Add new book</h3>
         <input
@@ -54,5 +57,6 @@
         <button class="btn btn-light-green" type="submit">Submit</button>
       </form>
     </div>
+    <div class="overlay hidden"></div>
   </body>
 </html>
