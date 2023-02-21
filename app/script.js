@@ -1,5 +1,6 @@
 const addBookBtn = document.getElementById("addBookBtn");
 const grid = document.querySelector(".grid");
+
 //
 //Modal elements
 const modal = document.querySelector(".modal");
@@ -43,34 +44,96 @@ const resetForm = function () {
   title.value = "";
   author.value = "";
   numberOfPages.value = "";
+  isRead.checked = false;
 };
 
 //Constructor functon
-function Book(title, author, numberOfPages, readen) {
+function Book(title, author, numberOfPages, boolean) {
   this.title = title;
   this.author = author;
   this.numberOfPages = numberOfPages;
-  this.readen = readen;
+  this.isRead = boolean;
+  this.index = myLibrary.length;
 }
 
 Book.prototype.info = function () {
   return `${this.title} by ${this.author}, ${this.numberOfPages} pages, ${
-    this.readen ? "readen" : "not read yet"
+    this.isRead ? "readen" : "not read yet"
   }`;
 };
 
-//Submit button and object
-// Check if i can use and submit event instead of click. To do so I would have to attach the event to the form instead of the submit button.
-submitBtn.addEventListener("click", e => {
+//
+//Looping through myLibrary Array
+const displayBooks = function (array) {
+  grid.innerHTML = "";
+  array.forEach(book => {
+    const card = document.createElement("div");
+    const title = document.createElement("h2");
+    const author = document.createElement("p");
+    const pages = document.createElement("p");
+    const readBtn = document.createElement("button");
+    const removeBtn = document.createElement("button");
+
+    card.classList.add("card");
+    readBtn.classList.add("btn");
+
+    if (book.isRead === "true") {
+      readBtn.classList.add("btn-green");
+      readBtn.textContent = "Read";
+    } else {
+      readBtn.classList.add("btn-red");
+      readBtn.textContent = "Not read";
+    }
+
+    removeBtn.classList.add("btn", "remove");
+    title.textContent = book.title;
+    author.textContent = book.author;
+    pages.textContent = `${book.numberOfPages} pages`;
+    removeBtn.textContent = "Remove";
+    grid.appendChild(card);
+    card.appendChild(title);
+    card.appendChild(author);
+    card.appendChild(pages);
+    card.appendChild(readBtn);
+    card.appendChild(removeBtn);
+
+    readBtn.addEventListener("click", function () {
+      if (readBtn.textContent === "Read") {
+        readBtn.classList.remove("btn-green");
+        readBtn.classList.add("btn-red");
+        book.isRead = "false";
+        readBtn.textContent = "Not read";
+      } else {
+        readBtn.classList.add("btn-green");
+        readBtn.classList.remove("btn-red");
+        book.isRead = "true";
+        readBtn.textContent = "Read";
+      }
+    });
+
+    removeBtn.addEventListener("click", function () {
+      const item = myLibrary.indexOf;
+    });
+  });
+};
+
+//Submit button listener
+form.addEventListener("submit", e => {
   if (
     title.validity.valid &&
     author.validity.valid &&
     numberOfPages.validity.valid
   ) {
-    const newBook = new Book(title.value, author.value, numberOfPages.value);
+    const newBook = new Book(
+      title.value,
+      author.value,
+      numberOfPages.value,
+      isRead.checked ? "true" : "false"
+    );
     myLibrary.push(newBook);
-    console.log(myLibrary);
-    e.preventDefault();
+    displayBooks(myLibrary);
+    closeModal();
     resetForm();
+    e.preventDefault();
   }
 });
