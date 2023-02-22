@@ -150,12 +150,8 @@ input::placeholder {
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 20px;
+  gap: 10px;
 }
-
-/* .removeBtn {
-  display: block;
-} */
 
 .btn-green {
   background-color: aquamarine;

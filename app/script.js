@@ -1,3 +1,4 @@
+"use strict";
 const addBookBtn = document.getElementById("addBookBtn");
 const grid = document.querySelector(".grid");
 
@@ -53,17 +54,11 @@ function Book(title, author, numberOfPages, boolean) {
   this.author = author;
   this.numberOfPages = numberOfPages;
   this.isRead = boolean;
-  this.index = myLibrary.length;
+  this.id = myLibrary.length + 1;
 }
 
-Book.prototype.info = function () {
-  return `${this.title} by ${this.author}, ${this.numberOfPages} pages, ${
-    this.isRead ? "readen" : "not read yet"
-  }`;
-};
-
 //
-//Looping through myLibrary Array
+//Looping through myLibrary Array to display books cards
 const displayBooks = function (array) {
   grid.innerHTML = "";
   array.forEach(book => {
@@ -111,8 +106,14 @@ const displayBooks = function (array) {
       }
     });
 
-    removeBtn.addEventListener("click", function () {
-      const item = myLibrary.indexOf;
+    removeBtn.addEventListener("click", () => {
+      const item = book.id;
+      myLibrary = myLibrary.filter(book => book.id !== item);
+      card.remove();
+      myLibrary.forEach(book => {
+        book.id = myLibrary.indexOf(book) + 1;
+      });
+      console.log(myLibrary);
     });
   });
 };
